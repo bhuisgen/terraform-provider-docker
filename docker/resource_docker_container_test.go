@@ -1389,29 +1389,29 @@ resource "docker_image" "foo" {
 }
 
 resource "docker_container" "foo" {
-  name  = "tf-test"
-  image = "${docker_image.foo.latest}"
+	name  = "tf-test"
+	image = "${docker_image.foo.latest}"
 
-  healthcheck {
-    test         = ["CMD", "/bin/true"]
-    interval     = "30s"
-    timeout      = "5s"
-    start_period = "15s"
-    retries      = 10
-  }
+	healthcheck {
+    	test         = ["CMD", "/bin/true"]
+    	interval     = "30s"
+    	timeout      = "5s"
+    	start_period = "15s"
+    	retries      = 10
+	}
 }
 `
 const testAccDockerContainerNoStartConfig = `
 resource "docker_image" "foo" {
-  name         = "nginx:latest"
-  keep_locally = true
+	name         = "nginx:latest"
+	keep_locally = true
 }
 
 resource "docker_container" "foo" {
-  name     = "tf-test"
-  image    = "nginx:latest"
-  start    = false
-  must_run = false
+	name     = "tf-test"
+	image    = "nginx:latest"
+	start    = false
+	must_run = false
 }
 `
 const testAccDockerContainerNetworksIPv4AddressConfig = `
@@ -1479,7 +1479,7 @@ resource "docker_image" "foo" {
 resource "docker_container" "foo" {
 	name = "tf-test"
 	image = "${docker_image.foo.latest}"
-	networks_advanced =  [
+	networks_advanced = [
 		{
 			name = "${docker_network.test.name}",
 			ipv4_address = "10.0.1.123"
@@ -1515,29 +1515,30 @@ resource "docker_image" "foo" {
 `
 const testAccDockerContainerLogsConfig = `
 resource "docker_image" "foo" {
-  name         = "busybox:latest"
-  keep_locally = true
+	name         = "busybox:latest"
+	keep_locally = true
 }
 
 resource "docker_container" "foo" {
-  name     = "tf-test"
-  image    = "${docker_image.foo.latest}"
-  command  = ["/bin/sh", "-c", "for i in $(seq 1 10); do echo \"$i\"; done"]
-  attach   = true
-  logs     = true
-  must_run = false
+	name     = "tf-test"
+	image    = "${docker_image.foo.latest}"
+	command  = ["/bin/sh", "-c", "for i in $(seq 1 10); do echo \"$i\"; done"]
+	attach   = true
+	logs     = true
+	must_run = false
 }
 `
 const testAccDockerContainerExitCodeConfig = `
 resource "docker_image" "foo" {
-name = "busybox:latest"
-keep_locally = true
+	name = "busybox:latest"
+	keep_locally = true
 }
- resource "docker_container" "foo" {
-name = "tf-test"
-image = "${docker_image.foo.latest}"
-command = ["/bin/sh", "-c", "exit 123"]
-attach = true
-must_run = false
+
+resource "docker_container" "foo" {
+	name = "tf-test"
+	image = "${docker_image.foo.latest}"
+	command = ["/bin/sh", "-c", "exit 123"]
+	attach = true
+	must_run = false
 }
 `
